@@ -14,12 +14,7 @@ a:active { text-decoration:underline; }
 a:hover { text-decoration:underline; background-image:url('text_dottdeline.gif'); background-repeat:repeat-x; background-position:50% 100%; }
 -->
 </style>
-<style>
-<!--
-@font-face {font-family:굴림; src:url();}
-body,td,a,div,p,pre,input,textarea {font-family:굴림;font-size:9pt;}
--->
-</style>
+
 </head>
 
 <body bgcolor="${bodyback_c}"> 

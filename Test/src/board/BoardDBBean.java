@@ -157,47 +157,24 @@ public class BoardDBBean {
 
 	// deletePro.jsp : 실제 데이터를 삭제하는 메소드...
 	public int deleteArticle(int num, String passwd) throws Exception {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		String res = "config.xml";
+		InputStream is = Resources.getResourceAsStream(res);
+		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
+		SqlSession session = factory.openSession();
 		String dbpasswd = "";
 		int x = -1;
 		try {
-			conn = getConnection();
-
-			pstmt = conn.prepareStatement("select passwd from board where num = ?");
-			pstmt.setInt(1, num);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				dbpasswd = rs.getString("passwd");
-				if (dbpasswd.equals(passwd)) {
-					pstmt = conn.prepareStatement("delete from board where num=?");
-					pstmt.setInt(1, num);
-					pstmt.executeUpdate();
+			
+			dbpasswd = session.selectOne("board.resultPwd", num);
+			if (dbpasswd.equals(passwd)) {
+					
 					x = 1; // 글삭제 성공
-				} else
+				} else  
 					x = 0; // 비밀번호 틀림
-			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException ex) {
-				}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException ex) {
-				}
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException ex) {
-				}
-		}
+		} 
 		return x;
 	}
 }
