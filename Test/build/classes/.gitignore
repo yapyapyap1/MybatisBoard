@@ -1,0 +1,8 @@
+/action/
+/board/
+/config.xml
+/db.properties
+/jdbc/
+/mvc/
+/mybatis/
+/pool.jocl
